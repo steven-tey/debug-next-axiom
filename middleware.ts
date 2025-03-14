@@ -6,9 +6,15 @@ export const config = {
 };
 
 export default function middleware(req: NextRequest, ev: NextFetchEvent) {
+  console.log("middleware running...");
+
   const logger = new Logger({ source: "middleware" }); // traffic, request
   logger.middleware(req);
   ev.waitUntil(logger.flush());
+  console.log("logged request");
 
-  return NextResponse.next();
+  const url = new URL("/api/links", req.url);
+  console.log("rewriting to", url);
+
+  return NextResponse.rewrite(url);
 }
