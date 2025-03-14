@@ -1,6 +1,10 @@
 import { NextRequest, NextFetchEvent, NextResponse } from "next/server";
 import { Logger } from "next-axiom";
 
+export const config = {
+  matcher: "/api/:path*",
+};
+
 export default function middleware(req: NextRequest, ev: NextFetchEvent) {
   const logger = new Logger({ source: "middleware" }); // traffic, request
   logger.middleware(req);
